@@ -47,10 +47,13 @@ export class PhysicsWorld {
         let origin = transform.getOrigin();
         let rotation = transform.getRotation();
 
-        let obj = rb.threeObject; // Assuming we store a reference to the graphical object
+        let obj = rb.graphicalObject; // Assuming we store a reference to the graphical object
         if (obj) {
-          obj.position.set(origin.x(), origin.y(), origin.z());
-          obj.quaternion.set(rotation.x(), rotation.y(), rotation.z(), rotation.w());
+          obj.modelMatrix = mat4.fromRotationTranslation(
+            mat4.create(),
+            [rotation.x(), rotation.y(), rotation.z(), rotation.w()],
+            [origin.x(), origin.y(), origin.z()]
+          );
         }
       }
     });
